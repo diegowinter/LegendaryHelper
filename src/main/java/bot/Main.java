@@ -7,6 +7,7 @@ import db.dao.DAOResponse;
 import message_listeners.MessageInteractions;
 import message_listeners.commands.Add;
 import message_listeners.commands.Delete;
+import message_listeners.minigames.tictactoe.TicTacToe;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -27,6 +28,7 @@ public class Main extends ListenerAdapter {
 			.addEventListeners(new Add())
 			.addEventListeners(new Delete())
 			.addEventListeners(new MessageInteractions())
+			.addEventListeners(new TicTacToe())
 			.setActivity(Activity.listening("você!"))
 			.build();
 	}

@@ -45,6 +45,7 @@ public class DAOResponse {
 			responses.add(response);
 		}
 		prepStatement.close();
+		connector.closeConnection(connection);
 		
 		return responses;
 	}
