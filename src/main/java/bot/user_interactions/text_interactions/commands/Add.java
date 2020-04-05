@@ -1,23 +1,23 @@
-package message_listeners.commands;
+package bot.user_interactions.text_interactions.commands;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import bot.embeds.ErrorAlert;
+import bot.embeds.OkAlert;
+import bot.embeds.TipAlert;
 import db.dao.DAOKeyword;
 import db.dao.DAOResponse;
-import embeds.alerts.ErrorAlert;
-import embeds.alerts.OkAlert;
-import embeds.alerts.TipAlert;
-import exception.DuplicatedKeywordException;
+import exceptions.DuplicatedKeywordException;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class Add extends ListenerAdapter {
+public class Add {
 	
 	DAOKeyword daoKeyword = new DAOKeyword();
 	DAOResponse daoResponse = new DAOResponse();
 	
-	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+	public void onNewMessage(GuildMessageReceivedEvent event) {
 		if(event.getAuthor().isBot()) return;
 		String idServerOwner = event.getGuild().getOwner().getUser().getId();
 		String idMessageAuthor = event.getMessage().getAuthor().getId();

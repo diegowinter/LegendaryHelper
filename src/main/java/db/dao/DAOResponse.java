@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.Connector;
-import model.Response;
+import model.text_responses.Response;
 
 public class DAOResponse {
 	

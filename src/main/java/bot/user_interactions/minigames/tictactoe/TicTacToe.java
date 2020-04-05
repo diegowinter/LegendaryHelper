@@ -1,19 +1,19 @@
-package message_listeners.minigames.tictactoe;
+package bot.user_interactions.minigames.tictactoe;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import embeds.alerts.ErrorAlert;
-import embeds.alerts.OkAlert;
-import message_listeners.minigames.tictactoe.model.Session;
+import bot.embeds.ErrorAlert;
+import bot.embeds.OkAlert;
+import model.tictactoe.Session;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class TicTacToe extends ListenerAdapter {
+public class TicTacToe {
 
 	private ArrayList<Session> sessions = new ArrayList<Session>();
 
-	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+	public void onNewMessage(GuildMessageReceivedEvent event) {
 		if (event.getAuthor().isBot())
 			return;
 
@@ -41,7 +41,7 @@ public class TicTacToe extends ListenerAdapter {
 						}
 					} else {
 						event.getChannel().sendMessage(new ErrorAlert("Nenhuma sessão deste jogo para ser fechada",
-								"Sinta-se livre para iniciar uma nova!\nUse: `!tictactoe @anUser`").build()).queue();
+								"Sinta-se livre para iniciar uma nova!\nUse: `!tictactoe @aUser`").build()).queue();
 					}
 					
 					return;
@@ -168,7 +168,7 @@ public class TicTacToe extends ListenerAdapter {
 				return;
 			} else {
 				event.getChannel().sendMessage(new ErrorAlert("Nenhum jogo em andamento neste canal",
-						"Comece um novo jogo com `!tictactoe @anUser`.").build()).queue();
+						"Comece um novo jogo com `!tictactoe @aUser`.").build()).queue();
 			}
 		}
 	}

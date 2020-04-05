@@ -1,4 +1,4 @@
-package model;
+package model.text_responses;
 
 public class Response {
 	

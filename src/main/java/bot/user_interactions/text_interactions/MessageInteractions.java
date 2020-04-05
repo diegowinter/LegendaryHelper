@@ -1,4 +1,4 @@
-package message_listeners;
+package bot.user_interactions.text_interactions;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -6,17 +6,17 @@ import java.util.Random;
 
 import db.dao.DAOKeyword;
 import db.dao.DAOResponse;
-import model.Keyword;
-import model.Response;
+import model.text_responses.Keyword;
+import model.text_responses.Response;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class MessageInteractions extends ListenerAdapter {
+public class MessageInteractions {
 	
 	DAOKeyword daoKeyword = new DAOKeyword();
 	DAOResponse daoResponse = new DAOResponse();
 	
-	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+	public void onNewMessage(GuildMessageReceivedEvent event) {
 		if(event.getAuthor().isBot()) return;
 		if(event.getMessage().getContentRaw().substring(0, 1).equals("!")) return;
 		

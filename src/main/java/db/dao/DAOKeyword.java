@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import db.Connector;
-import exception.DuplicatedKeywordException;
-import exception.NonexistentKeywordException;
-import model.Keyword;
+import exceptions.DuplicatedKeywordException;
+import exceptions.NonexistentKeywordException;
+import model.text_responses.Keyword;
 
 public class DAOKeyword {
 	

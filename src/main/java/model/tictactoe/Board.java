@@ -1,4 +1,4 @@
-package message_listeners.minigames.tictactoe.model;
+package model.tictactoe;
 
 public class Board {
 

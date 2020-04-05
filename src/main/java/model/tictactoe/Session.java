@@ -1,6 +1,6 @@
-package message_listeners.minigames.tictactoe.model;
+package model.tictactoe;
 
-import message_listeners.minigames.tictactoe.VisualBoard;
+import bot.user_interactions.minigames.tictactoe.VisualBoard;
 
 public class Session {
 	

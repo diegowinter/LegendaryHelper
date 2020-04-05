@@ -1,4 +1,4 @@
-package embeds.alerts;
+package bot.embeds;
 
 import java.awt.Color;
 
