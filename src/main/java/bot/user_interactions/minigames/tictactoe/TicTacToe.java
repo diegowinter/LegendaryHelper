@@ -7,7 +7,6 @@ import bot.embeds.ErrorAlert;
 import bot.embeds.OkAlert;
 import model.tictactoe.Session;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class TicTacToe {
 
@@ -182,9 +181,15 @@ public class TicTacToe {
 			boolean result = session.getBoard().putElement(fieldX, fieldY, 0);
 			if (result) {
 				if (session.getBoard().getAvailableFields() == 0) {
-					session.getVisualBoard().updateBoard(visualField, 0, session.getPlayerXName(), true, true);
-					event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
-					removeSession(event.getChannel().getId());
+					if(session.getBoard().verifySolution()) {
+						session.getVisualBoard().updateBoard(visualField, 0, session.getPlayerXName(), true, false);
+						event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
+						removeSession(event.getChannel().getId());
+					} else {
+						session.getVisualBoard().updateBoard(visualField, 0, session.getPlayerXName(), true, true);
+						event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
+						removeSession(event.getChannel().getId());
+					}
 				} else if (session.getBoard().verifySolution()) {
 					session.getVisualBoard().updateBoard(visualField, 0, session.getPlayerXName(), true, false);
 					event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
@@ -201,9 +206,15 @@ public class TicTacToe {
 			boolean result = session.getBoard().putElement(fieldX, fieldY, 1);
 			if (result) {
 				if (session.getBoard().getAvailableFields() == 0) {
-					session.getVisualBoard().updateBoard(visualField, 1, session.getPlayerOName(), true, true);
-					event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
-					removeSession(event.getChannel().getId());
+					if(session.getBoard().verifySolution()) {
+						session.getVisualBoard().updateBoard(visualField, 1, session.getPlayerOName(), true, false);
+						event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
+						removeSession(event.getChannel().getId());
+					} else {
+						session.getVisualBoard().updateBoard(visualField, 1, session.getPlayerOName(), true, true);
+						event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
+						removeSession(event.getChannel().getId());
+					}
 				} else if (session.getBoard().verifySolution()) {
 					session.getVisualBoard().updateBoard(visualField, 1, session.getPlayerOName(), true, false);
 					event.getChannel().sendMessage(session.getVisualBoard().build()).queue();
