@@ -1,6 +1,9 @@
 package bot;
 
 import bot.user_interactions.minigames.tictactoe.TicTacToe;
+import bot.user_interactions.settings.Disable;
+import bot.user_interactions.settings.Enable;
+import bot.user_interactions.settings.Overview;
 import bot.user_interactions.text_interactions.MessageInteractions;
 import bot.user_interactions.text_interactions.commands.Add;
 import bot.user_interactions.text_interactions.commands.Delete;
@@ -13,6 +16,10 @@ public class MessageListener extends ListenerAdapter {
 	Delete delete = new Delete();
 	TicTacToe tictactoe = new TicTacToe();
 	MessageInteractions messageInteractions = new MessageInteractions();
+	Disable disable = new Disable();
+	Enable enable = new Enable();
+	Overview overview = new Overview();
+	
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		switch (event.getMessage().getContentRaw().split(" ")[0].toLowerCase()) {
@@ -23,6 +30,16 @@ public class MessageListener extends ListenerAdapter {
 			case "!delete":
 				delete.onNewMessage(event);
 				break;
+			case "!disable":
+				disable.onNewMessage(event);
+				break;
+			case "!enable":
+				enable.onNewMessage(event);
+				break;
+			case "!overview":
+				overview.onNewMessage(event);
+				break;
+				
 			/*Tic-tac-toe minigame commands*/
 			case "!tictactoe":
 			case "!1":

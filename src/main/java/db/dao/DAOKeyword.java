@@ -15,20 +15,21 @@ public class DAOKeyword {
 	
 	private Connector connector = new Connector();
 	
-	public int add(String word) throws SQLException, DuplicatedKeywordException {
+	public int add(String word, String serverId) throws SQLException, DuplicatedKeywordException {
 		try {
-			search(word);
+			search(word, serverId);
 			throw new DuplicatedKeywordException();
 		} catch (NonexistentKeywordException e) {
 			Connection connection = connector.getConnection();
-			PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO keywords(id, keyword)"
-					+ "values (0, ?)");
+			PreparedStatement prepStatement = connection.prepareStatement("INSERT INTO keywords(id, keyword, server_id)"
+					+ "values (0, ?, ?)");
 			prepStatement.setString(1, word);
+			prepStatement.setString(2, serverId);
 			prepStatement.execute();
 			prepStatement.close();
 			connector.closeConnection(connection);
 			try {
-				return search(word).getId();
+				return search(word, serverId).getId();
 			} catch (NonexistentKeywordException e1) {
 				e1.printStackTrace();
 			}
@@ -39,18 +40,20 @@ public class DAOKeyword {
 		return 0;
 	}
 	
-	public Keyword search(String word) throws SQLException, NonexistentKeywordException {
+	public Keyword search(String word, String serverId) throws SQLException, NonexistentKeywordException {
 		Connection connection = connector.getConnection();
 		Keyword keyword = new Keyword(null, 0);
 		
 		PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM " 
-				+ System.getenv("DB_NAME") + ".keywords WHERE keyword = ?");
+				+ System.getenv("DB_NAME") + ".keywords WHERE keyword = ? AND server_id = ?");
 		prepStatement.setString(1, word);
+		prepStatement.setString(2, serverId);
 		
 		ResultSet rs = prepStatement.executeQuery();
 		if(rs.next()) {
 			keyword.setKeyword(rs.getString("keyword"));
 			keyword.setId(rs.getInt("id"));
+			keyword.setServerId(rs.getString("server_id"));
 		} else {
 			prepStatement.close();
 			connector.closeConnection(connection);
@@ -63,16 +66,17 @@ public class DAOKeyword {
 		return keyword;
 	}
 	
-	public ArrayList<Keyword> searchKeywordSet(ArrayList<String> words) throws SQLException {
+	public ArrayList<Keyword> searchKeywordSet(ArrayList<String> words, String serverId) throws SQLException {
 		Connection connection = connector.getConnection();
 		Keyword keyword = null;
 		ArrayList<Keyword> keywordSet = new ArrayList<Keyword>();
 		
 		PreparedStatement prepStatement = connection.prepareStatement("SELECT * FROM " 
-				+ System.getenv("DB_NAME") + ".keywords WHERE keyword = ?");
+				+ System.getenv("DB_NAME") + ".keywords WHERE keyword = ? AND server_id = ?");
 		
 		for (String word : words) {
 			prepStatement.setString(1, word);
+			prepStatement.setString(2, serverId);
 			ResultSet rs = prepStatement.executeQuery();
 			if(rs.next()) {
 				keyword = new Keyword(null, 0);
@@ -88,13 +92,14 @@ public class DAOKeyword {
 		return keywordSet;
 	}
 	
-	public int delete(String word) throws NonexistentKeywordException, SQLException {
+	public int delete(String word, String serverId) throws NonexistentKeywordException, SQLException {
 		Connection connection = connector.getConnection();
-		Keyword keyword = search(word);
+		Keyword keyword = search(word, serverId);
 		
 		PreparedStatement prepStatement = connection.prepareStatement("DELETE FROM " 
-				+ System.getenv("DB_NAME") + ".keywords WHERE id = ?");
+				+ System.getenv("DB_NAME") + ".keywords WHERE id = ? AND server_id = ?");
 		prepStatement.setInt(1, keyword.getId());
+		prepStatement.setString(2, serverId);
 		prepStatement.execute();
 		prepStatement.close();
 		connector.closeConnection(connection);

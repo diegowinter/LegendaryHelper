@@ -67,7 +67,7 @@ public class Add {
 					
 					try {
 						event.getMessage().addReaction("U+1F552").queue();
-						int keywordId = daoKeyword.add(entries.get(0).toLowerCase());
+						int keywordId = daoKeyword.add(entries.get(0).toLowerCase(), event.getGuild().getId());
 						String keyword = entries.get(0).toLowerCase();
 						entries.remove(0);
 						daoResponse.addResponseSet(keywordId, entries);

@@ -4,7 +4,7 @@
 
   <groupId>dev.diegowinter</groupId>
   <artifactId>LegendaryHelper</artifactId>
-  <version>0.2.2-alpha</version>
+  <version>0.3.0-alpha</version>
   <packaging>jar</packaging>
 
   <name>LegendaryHelper</name>

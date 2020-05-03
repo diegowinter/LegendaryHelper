@@ -1,20 +1,36 @@
 package bot.user_interactions.minigames.tictactoe;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
 import bot.embeds.ErrorAlert;
 import bot.embeds.OkAlert;
+import db.dao.DAOServer;
+import exceptions.NonexistentServerRegisterException;
 import model.tictactoe.Session;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class TicTacToe {
 
 	private ArrayList<Session> sessions = new ArrayList<Session>();
-
+	
+	DAOServer daoServer = new DAOServer();
+	
 	public void onNewMessage(GuildMessageReceivedEvent event) {
 		if (event.getAuthor().isBot())
 			return;
+		
+		try {
+			if(!daoServer.search(event.getGuild().getId()).isEnableMinigames()) return;
+		} catch (SQLException | NonexistentServerRegisterException e1) {
+			event.getChannel().sendMessage(new ErrorAlert("NonexistentServerRegisterException | SQLException",
+					"Remover e adicionar o LegendaryHelper do servidor pode ajudar a solucionar o problema. "
+					+ "Estamos trabalhando nisso.").build()).queue();
+			e1.printStackTrace();
+			
+			return;
+		}
 
 		String possibleCommand = event.getMessage().getContentRaw().split(" ")[0];
 

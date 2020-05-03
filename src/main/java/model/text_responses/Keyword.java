@@ -4,6 +4,7 @@ public class Keyword {
 	
 	private String keyword;
 	private int id;
+	private String serverId;
 	
 	public Keyword(String keyword, int id) {
 		this.keyword = keyword;
@@ -24,6 +25,14 @@ public class Keyword {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(String serverId) {
+		this.serverId = serverId;
 	}
 
 }

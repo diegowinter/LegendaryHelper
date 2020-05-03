@@ -60,9 +60,9 @@ public class Delete {
 					ArrayList<String> fail = new ArrayList<String>();
 					for (String entry : entries) {
 						try {
-							int id = daoKeyword.search(entry).getId();
+							int id = daoKeyword.search(entry, event.getGuild().getId()).getId();
 							daoResponse.delete(id);
-							daoKeyword.delete(entry);
+							daoKeyword.delete(entry, event.getGuild().getId());
 							success.add(entry);
 						} catch (NonexistentKeywordException e) {
 							fail.add(entry);
