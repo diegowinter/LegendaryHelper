@@ -3,6 +3,7 @@ package bot.user_interactions.text_interactions;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import bot.embeds.ErrorAlert;
 import db.dao.DAOKeyword;
@@ -49,9 +50,14 @@ public class MessageInteractions {
 					.searchResponseSet(keywordSet
 					.get(random.nextInt(keywordSet.size())).getId());
 			
-			event.getChannel().sendMessage(responseSet
-					.get(random.nextInt(responseSet.size())).getResponse())
-					.queue();
+			String response = responseSet.get(random.nextInt(responseSet.size())).getResponse();		
+			
+			response = response.replace("&u", "<@" + event.getAuthor().getId() + ">");
+			
+			int typingTime = response.length() <= 80 ? (((response.length() / 10) / 2) + 1) : 6;
+					
+			event.getChannel().sendTyping().queue();
+			event.getChannel().sendMessage(response).queueAfter(typingTime, TimeUnit.SECONDS);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 package bot;
 
 import bot.user_interactions.minigames.tictactoe.TicTacToe;
+import bot.user_interactions.poll.Poll;
 import bot.user_interactions.settings.Disable;
 import bot.user_interactions.settings.Enable;
 import bot.user_interactions.settings.Overview;
@@ -19,7 +20,7 @@ public class MessageListener extends ListenerAdapter {
 	Disable disable = new Disable();
 	Enable enable = new Enable();
 	Overview overview = new Overview();
-	
+	Poll poll = new Poll();
 	
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 		switch (event.getMessage().getContentRaw().split(" ")[0].toLowerCase()) {
@@ -39,7 +40,9 @@ public class MessageListener extends ListenerAdapter {
 			case "!overview":
 				overview.onNewMessage(event);
 				break;
-				
+			case "!poll":
+				poll.onNewMessage(event);
+				break;
 			/*Tic-tac-toe minigame commands*/
 			case "!tictactoe":
 			case "!1":

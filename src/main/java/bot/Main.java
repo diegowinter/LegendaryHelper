@@ -32,7 +32,7 @@ public class Main extends ListenerAdapter {
 	
 	@Override
 	public void onGuildJoin(GuildJoinEvent event) {
-		System.out.println("INFO: Joined " +  event.getGuild().getId());
+		System.out.println("INFO: Welcome, " +  event.getGuild().getId());
 		try {
 			daoServer.add(event.getGuild().getId());
 		} catch (SQLException | ExistingServerRegisterException e) {
