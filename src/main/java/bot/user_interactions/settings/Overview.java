@@ -31,7 +31,7 @@ public class Overview {
 				embed.setColor(Color.GRAY);
 				embed.setTitle("Resumo neste servidor");
 				if(server.isEnableKeywordResponses()) {
-					embed.addField("Interação", "Ativdada", true);
+					embed.addField("Interação", "Ativada", true);
 				} else {
 					embed.addField("Interação", "Desativada", true);
 				}
